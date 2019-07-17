@@ -6,6 +6,7 @@
         host = "${var.bastion_ip_address}"
         private_key = "${file(var.bastion_private_ssh_key)}"
     }
+
     provisioner "file" {
         source      = "${path.module}/scripts"
         destination = "/tmp"
@@ -26,5 +27,4 @@
             "subscription-manager unregister",
         ]
     }
-
 }
