@@ -1,4 +1,4 @@
-    resource "null_resource" "setup_app" {
+resource "null_resource" "setup_app" {
     count = "${var.app_count}"
     connection {
         type     = "ssh"
@@ -10,12 +10,14 @@
     }
 
     provisioner "file" {
+        when = "create"
         source      = "${path.module}/scripts"
         destination = "/tmp"
     }
 
 
     provisioner "remote-exec" {
+        when = "create"
         inline = [
             "chmod +x /tmp/scripts/*",
             "/tmp/scripts/rhn_register.sh ${var.rhn_username} ${var.rhn_password} ${var.rhn_poolid}",
