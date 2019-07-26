@@ -1,5 +1,3 @@
-variable "app_count"  {
-}
 
 variable "app_ip_address" {
   type = "list"
@@ -19,8 +17,6 @@ variable "bastion_private_ssh_key" {
 
 }
 
-variable "infra_count"  {
-}
 
 variable "infra_ip_address" {
   type = "list"
@@ -31,9 +27,6 @@ variable "infra_private_ssh_key" {
 
 }
 
-variable "master_count"  {
-}
-
 variable "master_ip_address" {
   type = "list"
 }
@@ -41,9 +34,6 @@ variable "master_ip_address" {
 
 variable "master_private_ssh_key" {
 
-}
-
-variable "storage_count"  {
 }
 
 variable "storage_ip_address" {
