@@ -66,3 +66,7 @@ variable "rhn_password"{
 variable "rhn_poolid"{
 
 }
+
+variable "ssh_username" {
+    default = "root"
+}

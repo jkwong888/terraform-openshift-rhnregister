@@ -2,7 +2,7 @@ resource "null_resource" "setup_storage" {
     count = "${var.storage_count}"
     connection {
         type     = "ssh"
-        user     = "root"
+        user     = "${var.ssh_username}"
         host = "${element(var.storage_ip_address, count.index)}"
         private_key = "${file(var.storage_private_ssh_key)}"
         bastion_host = "${var.bastion_ip_address}"
@@ -18,15 +18,15 @@ resource "null_resource" "setup_storage" {
     provisioner "remote-exec" {
         when = "create"
         inline = [
-            "chmod +x /tmp/scripts/*",
-            "/tmp/scripts/rhn_register.sh ${var.rhn_username} ${var.rhn_password} ${var.rhn_poolid}",
+            "sudo chmod +x /tmp/scripts/*",
+            "sudo /tmp/scripts/rhn_register.sh ${var.rhn_username} ${var.rhn_password} ${var.rhn_poolid}",
         ]
     }
 
     provisioner "remote-exec" {
         when = "destroy"
         inline = [
-            "subscription-manager unregister",
+            "sudo subscription-manager unregister",
         ]
     }
 }
