@@ -1,58 +1,29 @@
-variable "app_count"  {
-}
-
-variable "app_ip_address" {
-  type = "list"
-}
-
-
-variable "app_private_ssh_key" {
-
-}
-
 variable "bastion_ip_address" {
-
+  default = ""
 }
 
-
-variable "bastion_private_ssh_key" {
-
+variable "bastion_ssh_private_key" {
+  default = ""
 }
 
-variable "infra_count"  {
+variable "bastion_ssh_user" {
+  default = ""
 }
 
-variable "infra_ip_address" {
+variable "node_ip_address" {
   type = "list"
+  default = []
 }
 
-
-variable "infra_private_ssh_key" {
-
+variable "ssh_private_key" {
 }
 
-variable "master_count"  {
+variable "ssh_user" {
+  default = "root"
 }
 
-variable "master_ip_address" {
-  type = "list"
-}
-
-
-variable "master_private_ssh_key" {
-
-}
-
-variable "storage_count"  {
-}
-
-variable "storage_ip_address" {
-  type = "list"
-}
-
-
-variable "storage_private_ssh_key" {
-
+variable "ssh_password" {
+  default = ""
 }
 
 variable "rhn_username"{
@@ -65,4 +36,12 @@ variable "rhn_password"{
 
 variable "rhn_poolid"{
 
+}
+
+variable "ansible_version" {
+  default = "2.6"
+}
+
+variable "openshift_version" {
+  default = "3.11"
 }
