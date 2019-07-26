@@ -11,7 +11,7 @@ poolID=$3
 
 subscription-manager unregister
 
-mv /etc/rhsm/rhsm.conf.rpmnew /etc/rhsm/rhsm.conf
+test -e /etc/rhsm/rhsm.conf.rpmnew && mv /etc/rhsm/rhsm.conf.rpmnew /etc/rhsm/rhsm.conf
 
 subscription-manager register --username=${username} --password=${password}
 subscription-manager refresh
