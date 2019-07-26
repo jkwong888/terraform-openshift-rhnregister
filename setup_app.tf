@@ -1,5 +1,5 @@
 resource "null_resource" "setup_app" {
-    count = "${var.app_count}"
+    count = "${length(var.app_ip_address)}"
     connection {
         type     = "ssh"
         user     = "${var.ssh_username}"

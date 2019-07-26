@@ -1,5 +1,5 @@
 resource "null_resource" "setup_master" {
-    count = "${var.master_count}"
+    count = "${length(var.master_ip_address)}"
     connection {
         type     = "ssh"
         user     = "${var.ssh_username}"
