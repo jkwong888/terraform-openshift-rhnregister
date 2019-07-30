@@ -1,5 +1,5 @@
 resource "null_resource" "setup_storage" {
-    count = "${length(var.storage_ip_address)}"
+    count = "${var.storage["nodes"]}"
     connection {
         type     = "ssh"
         user     = "${var.ssh_username}"

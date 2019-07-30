@@ -60,3 +60,9 @@ variable "rhn_poolid"{
 variable "ssh_username" {
     default = "root"
 }
+
+variable "bastion" {type = "map"}
+variable "master"  {type = "map"}
+variable "infra"   {type = "map"}
+variable "worker"  {type = "map"}
+variable "storage" {type = "map"}

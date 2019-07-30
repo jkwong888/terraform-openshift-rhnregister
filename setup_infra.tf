@@ -1,5 +1,5 @@
 resource "null_resource" "setup_infra" {
-    count = "${length(var.infra_ip_address)}"
+    count = "${var.infra["nodes"]}"
     connection {
         type     = "ssh"
         user     = "${var.ssh_username}"
