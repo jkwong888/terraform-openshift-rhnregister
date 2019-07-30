@@ -6,7 +6,7 @@ resource "random_id" "completed" {
         "null_resource.setup_infra",
         "null_resource.setup_worker",
         "null_resource.setup_storage",
-        "null_resource.dependencies"
+        "null_resource.dependency"
     ]
 }
 
