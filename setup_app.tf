@@ -1,4 +1,4 @@
-resource "null_resource" "setup_app" {
+resource "null_resource" "setup_worker" {
     count = "${var.worker["nodes"]}"
     connection {
         type     = "ssh"
