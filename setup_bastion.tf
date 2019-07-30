@@ -28,4 +28,8 @@ resource "null_resource" "setup_bastion" {
             "sudo subscription-manager unregister",
         ]
     }
+
+    depends_on = [
+        "null_resource.dependency"
+    ]
 }

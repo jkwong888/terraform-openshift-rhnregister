@@ -30,4 +30,8 @@ resource "null_resource" "setup_worker" {
             "sudo subscription-manager unregister",
         ]
     }
+
+    depends_on = [
+        "null_resource.dependency"
+    ]
 }
