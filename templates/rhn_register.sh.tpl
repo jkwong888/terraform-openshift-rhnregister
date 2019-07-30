@@ -1,4 +1,7 @@
 #!/bin/bash
+
+exec 3>&1 4>&2 1> >(tee $0.log.$$ >&3) 2> >(tee $0.log.$$ >&4)
+
 # Script to register with redhat and enable the packages required to install openshift on bastion machine.
 
 # Unregister with softlayer subscription
