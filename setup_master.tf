@@ -29,8 +29,4 @@ resource "null_resource" "setup_master" {
             "sudo subscription-manager unregister",
         ]
     }
-
-        depends_on = [
-            "null_resource.dependency"
-        ]
 }
