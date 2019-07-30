@@ -6,9 +6,16 @@ resource "random_id" "completed" {
         "null_resource.setup_infra",
         "null_resource.setup_worker",
         "null_resource.setup_storage",
+        "null_resource.dependencies"
     ]
 }
 
 output "completed" {
     value = "${random_id.completed.hex}"
+}
+
+resource "null_resource" "dependency" {
+  triggers = {
+    all_dependencies = "${join(",", var.dependencies)}"
+  }
 }
