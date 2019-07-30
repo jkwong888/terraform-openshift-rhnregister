@@ -22,6 +22,7 @@ resource "null_resource" "rhn_register" {
         private_key = "${var.ssh_private_key}"
 
         bastion_host = "${var.bastion_ip_address}"
+        bastion_password = "${var.bastion_ssh_password}"
         bastion_host_key = "${var.bastion_ssh_private_key}"
     }
 
