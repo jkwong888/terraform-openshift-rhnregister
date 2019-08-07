@@ -3,21 +3,28 @@
 This is meant to be used as a module, make sure your module implementation sets all the variables in its terraform.tfvars file
 
 ```terraform
+locals {
+    rhn_all_nodes = "${concat(
+        "${list(module.infrastructure.bastion_public_ip)}",
+        "${module.infrastructure.master_private_ip}",
+        "${module.infrastructure.infra_private_ip}",
+        "${module.infrastructure.app_private_ip}",
+        "${module.infrastructure.storage_private_ip}",
+        "${module.infrastructure.haproxy_public_ip}",
+    )}"
+    rhn_all_count = "${var.bastion["nodes"] + var.master["nodes"] + var.infra["nodes"] + var.worker["nodes"] + var.storage["nodes"] + var.haproxy["nodes"]}"
+}
+
 module "rhnregister" {
-    source                  = "git::ssh://git@github.ibm.com/ncolon/terraform-openshift-rhnregister.git"
-    rhn_username            = "${var.rhn_username}"
-    rhn_password            = "${var.rhn_password}"
-    rhn_poolid              = "${var.rhn_poolid}"
-    master_ip_address       = "${module.infrastructure.master_public_ip}"
-    master_private_ssh_key  = "${var.private_ssh_key}"
-    infra_ip_address        = "${module.infrastructure.infra_public_ip}"
-    infra_private_ssh_key   = "${var.private_ssh_key}"
-    app_ip_address          = "${module.infrastructure.app_public_ip}"
-    app_private_ssh_key     = "${var.private_ssh_key}"
-    storage_ip_address      = "${module.infrastructure.storage_public_ip}"
-    storage_private_ssh_key = "${var.private_ssh_key}"
-    bastion_ip_address      = "${module.infrastructure.bastion_public_ip}"
-    bastion_private_ssh_key = "${var.private_ssh_key}"
+  source = "git::ssh://git@github.ibm.com/ncolon/terraform-openshift-rhnregister.git"
+  bastion_ip_address = "${module.infrastructure.bastion_public_ip}"
+  private_ssh_key    = "${var.private_ssh_key}"
+  ssh_username       = "${var.ssh_user}"
+  rhn_username       = "${var.rhn_username}"
+  rhn_password       = "${var.rhn_password}"
+  rhn_poolid         = "${var.rhn_poolid}"
+  all_nodes          = "${local.rhn_all_nodes}"
+  all_count          = "${local.rhn_all_count}"
 }
 ```
 
@@ -25,17 +32,14 @@ module "rhnregister" {
 
 |Variable Name|Description|Default Value|Type|
 |-------------|-----------|-------------|----|
+|bastion_ip_address|Public IP Address of Bastion VM|-|string|
+|private_ssh_key|ssh key for all nodes|-|string|
+|ssh_username|SSH user.  Must have passwordless sudo access|-|string|
 |rhn_username|RedHat Username|-|string|
 |rhn_password|RedHat Password|-|string|
 |rhn_poolid|OpenShift Subscription Pool ID|-|string|
-|master_ip_address|Public IPv4 Address of Master Nodes|-|list|
-|master_private_ssh_key|ssh key for master servers|-|string|
-|infra_ip_address|Public IPv4 Address of Infra Nodes|-|list|
-|infra_private_ssh_key|ssh key for Infra servers|-|string|
-|app_ip_address|Public IPv4 Address of Master Nodes|-|list|
-|app_private_ssh_key|ssh key for master servers|-|string|
-|storage_ip_address|Public IPv4 Address of Master Nodes|-|list|
-|storage_private_ssh_key|ssh key for master servers|-|string|
+|all_nodes|IP Address list of all nodes to register|-|list|
+|all_count|Total number of nodes to register|-|number|
 
 
 ## Module Output
