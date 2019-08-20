@@ -14,6 +14,10 @@ data "template_file" "rhn_register_sh" {
 resource "null_resource" "rhn_register" {
     count = "${length(var.node_ip_address)}"
 
+    triggers = {
+      node_list = "${join(",", var.node_ip_address)}"
+    }
+
     connection {
         type     = "ssh"
         host = "${element(var.node_ip_address, count.index)}"
