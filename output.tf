@@ -1,3 +1,3 @@
 output "registered_resource" {
-  value = "${join(",", null_resource.rhn_register.*.id)}"
+  value = "${join(",", null_resource.rhnregister.*.id)}"
 }
