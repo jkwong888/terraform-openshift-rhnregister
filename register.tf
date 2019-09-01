@@ -12,22 +12,23 @@ data "template_file" "rhn_register_sh" {
 }
 
 resource "null_resource" "rhn_register" {
-    count = "${length(var.node_ip_address)}"
+    count = "${var.all_count}"
 
     triggers = {
-      node_list = "${join(",", var.node_ip_address)}"
+      node_list = "${join(",", var.all_nodes)}"
     }
 
     connection {
         type     = "ssh"
-        host = "${element(var.node_ip_address, count.index)}"
-        user     = "${var.ssh_user}"
-        password = "${var.ssh_password}"
+        host        = "${element(var.all_nodes, count.index)}"
+        user        = "${var.ssh_user}"
+        password    = "${var.ssh_password}"
         private_key = "${var.ssh_private_key}"
 
-        bastion_host = "${var.bastion_ip_address}"
-        bastion_password = "${var.bastion_ssh_password}"
-        bastion_host_key = "${var.bastion_ssh_private_key}"
+        bastion_host        = "${var.bastion_ip_address}"
+        bastion_user        = "${var.bastion_ssh_user}"
+        bastion_password    = "${var.bastion_ssh_password}"
+        bastion_private_key = "${var.bastion_ssh_private_key}"
     }
 
     provisioner "file" {
@@ -41,6 +42,7 @@ resource "null_resource" "rhn_register" {
         inline = [
             "chmod +x /tmp/rhn_register.sh",
             "sudo /tmp/rhn_register.sh",
+            "rm -f /tmp/rhn_register.sh"
         ]
     }
 
