@@ -2,29 +2,25 @@
 
 This is meant to be used as a module, make sure your module implementation sets all the variables in its terraform.tfvars file
 
-```terraform
-locals {
-    rhn_all_nodes = "${concat(
-        "${list(module.infrastructure.bastion_public_ip)}",
-        "${module.infrastructure.master_private_ip}",
-        "${module.infrastructure.infra_private_ip}",
-        "${module.infrastructure.app_private_ip}",
-        "${module.infrastructure.storage_private_ip}",
-        "${module.infrastructure.haproxy_public_ip}",
-    )}"
-    rhn_all_count = "${var.bastion["nodes"] + var.master["nodes"] + var.infra["nodes"] + var.worker["nodes"] + var.storage["nodes"] + var.haproxy["nodes"]}"
-}
+In the example, we register 3 nodes to the public red hat network subscription.  This is useful in cases where we are preparing nodes to install Openshift over the Internet.
 
+```terraform
 module "rhnregister" {
-  source = "git::ssh://git@github.ibm.com/ncolon/terraform-openshift-rhnregister.git"
-  bastion_ip_address = "${module.infrastructure.bastion_public_ip}"
-  private_ssh_key    = "${var.private_ssh_key}"
-  ssh_username       = "${var.ssh_user}"
-  rhn_username       = "${var.rhn_username}"
-  rhn_password       = "${var.rhn_password}"
-  rhn_poolid         = "${var.rhn_poolid}"
-  all_nodes          = "${local.rhn_all_nodes}"
-  all_count          = "${local.rhn_all_count}"
+  source             = "github.com/ibm-cloud-architecture/terraform-openshift-rhnregister.git?ref=v1.1"
+
+  bastion_ip_address      = "<bastion_public_ip>"
+  bastion_ssh_user        = "<bastion_ssh_user>"
+  bastion_ssh_private_key = "<bastion_ssh_private_key>"
+
+  ssh_user           = "<ssh_user>"
+  ssh_private_key    = "<ssh_private_key>"
+
+  rhn_username       = "<RHN username>"
+  rhn_password       = "<RHN password>"
+  rhn_poolid         = "<RHN pool id>"
+
+  all_nodes          = ["<ip1>", "<ip2>", "<ip3>"]
+  all_count          = 3
 }
 ```
 
@@ -33,8 +29,12 @@ module "rhnregister" {
 |Variable Name|Description|Default Value|Type|
 |-------------|-----------|-------------|----|
 |bastion_ip_address|Public IP Address of Bastion VM|-|string|
-|private_ssh_key|ssh key for all nodes|-|string|
-|ssh_username|SSH user.  Must have passwordless sudo access|-|string|
+|bastion_ssh_user|Bastion SSH user|-|string|
+|bastion_ssh_password|Bastion SSH password|-|string|
+|bastion_private_ssh_key|Bastion ssh key|-|string|
+|ssh_user|SSH user.  Must have passwordless sudo access|-|string|
+|ssh_password|SSH password|-|string|
+|ssh_private_key|SSH private key|-|string|
 |rhn_username|RedHat Username|-|string|
 |rhn_password|RedHat Password|-|string|
 |rhn_poolid|OpenShift Subscription Pool ID|-|string|
@@ -43,6 +43,6 @@ module "rhnregister" {
 
 
 ## Module Output
-This module produces no output
+This module produces a list of randomly generated IDs representing a completed registration of a node.  You can use this in dependencies; for example before executing the openshift installation, you can pass this list of resource IDs to make sure that all nodes are registered.
 
 ----
