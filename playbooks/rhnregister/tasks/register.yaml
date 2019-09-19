@@ -1,0 +1,7 @@
+- name: Register RHN
+  redhat_subscription:
+    state: present
+    username: "{{ rhn_username }}"
+    password: "{{ rhn_password }}"
+    pool_ids: "{{ rhn_poolid }}"
+    force_register: yes

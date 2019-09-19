@@ -1,0 +1,4 @@
+- hosts: all
+  tasks:
+  - name: Register RHN
+    include: tasks/register.yaml

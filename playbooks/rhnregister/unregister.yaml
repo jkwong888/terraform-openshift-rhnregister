@@ -1,0 +1,5 @@
+---
+- hosts: all
+  tasks:
+  - name: Unregister RHN
+    include: tasks/unregister.yaml
