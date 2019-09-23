@@ -1,7 +1,19 @@
+# because redhat_subscription doesn't allow us to set this
+- name: RHSM set config server.prefix
+  shell: subscription-manager config --server.prefix={{ rhn_server_prefix }}
+
+- name: RHSM set config server.port
+  shell: subscription-manager config --server.port={{ rhn_server_port }}
+
 - name: Register RHN
   redhat_subscription:
     state: present
     username: "{{ rhn_username }}"
     password: "{{ rhn_password }}"
     pool_ids: "{{ rhn_poolid }}"
+    server_hostname: "{{ rhn_server_hostname }}"
+
+    rhsm_repo_ca_cert: "{{ rhn_rhsm_repo_ca_cert }}"
+    rhsm_baseurl: "{{ rhn_rhsm_baseurl }}"
+
     force_register: yes
