@@ -1,6 +1,10 @@
 module "runplaybook" {
   source = "github.com/ibm-cloud-architecture/terraform-ansible-runplaybooks.git"
 
+  triggers {
+    all_nodes = "${var.all_nodes}"
+  }
+
   ansible_playbook_dir = "${path.module}/playbooks"
   ansible_playbooks = [
     "playbooks/configure_rhn.yaml"
