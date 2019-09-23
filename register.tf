@@ -32,6 +32,13 @@ module "runplaybook" {
     "rhn_username" = "${var.rhn_username}"
     "rhn_password" = "${var.rhn_password}"
     "rhn_poolid"  = "${var.rhn_poolid}"
+
+    "rhn_server_hostname" = "${var.rhn_server_hostname}"
+    "rhn_server_prefix" = "${var.rhn_server_prefix}"
+    "rhn_server_port" = "${var.rhn_server_port}"
+
+    "rhn_rhsm_baseurl" = "${var.rhn_rhsm_baseurl}"
+    "rhn_rhsm_repo_ca_cert" = "${var.rhn_rhsm_repo_ca_cert}"
   }
 
   # ansible_verbosity = "-vvv"
