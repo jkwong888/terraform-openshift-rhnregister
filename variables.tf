@@ -42,3 +42,9 @@ variable "all_nodes" {
 variable "all_count" {
   default = 0
 }
+
+variable "dependson" {
+    type = "list"
+    default = []
+}
+
