@@ -1,7 +1,7 @@
 module "runplaybook" {
   source = "github.com/ibm-cloud-architecture/terraform-ansible-runplaybooks.git"
 
-  triggers {
+  triggerson = {
     all_nodes = "${var.all_nodes}"
   }
 
